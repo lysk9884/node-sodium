@@ -342,18 +342,30 @@ function isPreInstallMode() {
     return false;
 }
 
+function preinstall() {
+    return run("make libsodium");
+}
+
+function handleErr(err) {
+    console.error("!! Error encountered while building:")
+    console.error(err)
+    process.exit(1);
+}
 
 // Start
 if (os.platform() !== "win32") {
     if (isPreInstallMode()) {
-        if (exists("./deps/libsodium")) fs.rmdirSync("./deps/libsodium");
-        run("command -v git >/dev/null 2>&1 || { echo >&2 \"I require git but it's not installed.  Aborting.\"; exit 1; }")
-            .then(() => run("git clone https://github.com/jedisct1/libsodium.git ./deps/libsodium && cd ./deps/libsodium && git checkout 1.0.15"))
-            .then(() => run("make libsodium"))
-            .then(() => process.exit(0))
-            .catch(e => { setTimeout(() => process.exit(1), 1000); throw e; });
+        if (exists(".git")) {
+            run("command -v git >/dev/null 2>&1 || { echo >&2 \"I require git but it's not installed.  Aborting.\"; exit 1; }")
+            .then(() => run("git submodule init"))
+            .then(() => run("git submodule update"))
+            .then(preinstall)
+            .catch(handleErr);
+        } else {
+            preinstall().then(() => process.exit(0)).catch(handleErr);
+        }
     } else {
-        run("make nodesodium").then(() => process.exit(0)).catch(e => { setTimeout(() => process.exit(1), 1000); throw e; });
+        run("make nodesodium").then(() => process.exit(0)).catch(handleErr);
     }
 } else {
     checkMSVSVersion();
