@@ -27,3 +27,5 @@ before_install:
   - export JOBS=max
   - export prebuild_compile=true
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+  - git submodule init
+  - git submodule update
