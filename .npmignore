@@ -22,3 +22,4 @@ lib-cov
 convershot
 html-report
 coverage.html
+!*.S

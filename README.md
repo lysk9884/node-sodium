@@ -3,7 +3,7 @@
 # node-sodium
 
 Fork of paxiaop/node-sodium which fixes lingering issues, as upstream has not been maintained for half a year & has a broken 2.0.3 release.
-Currently built against libsodium 1.0.15
+Currently built against libsodium 1.0.16
 
 Port of the [libsodium](https://github.com/jedisct1/libsodium) Encryption Library to Node.js.
 
@@ -128,8 +128,8 @@ please don't forget to copy the DLL file as well.
 If you experience difficulty with the install even with a correctly set `msvs_version`, it may be worth trying:
 
     npm install npm -g
-    
-to upgrade npm and its bundled version of node-gyp. 
+
+to upgrade npm and its bundled version of node-gyp.
 
 # Manual Build
 
@@ -142,7 +142,7 @@ Before you run the manual build you must run the `npm install` once to install t
 Please note that `npm install` will install the dependencies and compile `node-sodium` as well. After this initial step you can make changes to the source and run the following commands to manually build the module:
 
     make sodium
-    
+
 You need to install autotools and check the version. For OSX you can do
 
 ```
