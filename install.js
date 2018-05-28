@@ -346,8 +346,9 @@ function isPreInstallMode() {
 // Start
 if (os.platform() !== "win32") {
     if (isPreInstallMode()) {
+        if (exists("./deps/libsodium")) fs.rmdirSync("./deps/libsodium");
         run("command -v git >/dev/null 2>&1 || { echo >&2 \"I require git but it's not installed.  Aborting.\"; exit 1; }")
-            .then(() => run("rm -rf ./deps/libsodium && git clone https://github.com/jedisct1/libsodium.git ./deps/libsodium && cd ./deps/libsodium && git checkout 1.0.15"))
+            .then(() => run("git clone https://github.com/jedisct1/libsodium.git ./deps/libsodium && cd ./deps/libsodium && git checkout 1.0.15"))
             .then(() => run("make libsodium"))
             .then(() => process.exit(0))
             .catch(e => { setTimeout(() => process.exit(1), 1000); throw e; });
