@@ -272,25 +272,28 @@ function doDownloads(next) {
     });
 }
 
-function run(cmdLine, expectedExitCode, next) {
-    var child = exec(cmdLine);
+function run(cmdLine, expectedExitCode) {
+    return new Promise(function(resolve, reject) {
+        console.log("=>> " + cmdLine);
+        var child = exec(cmdLine);
 
-    if (typeof expectedExitCode === 'undefined') {
-        expectedExitCode = 0;
-    }
-
-    child.stdout.on('data', function(data) {
-        process.stdout.write(data.toString());
-    });
-    child.stderr.on('data', function(data) {
-        process.stdout.write(data.toString());
-    });
-    child.on('exit', function(code) {
-        if (code !== expectedExitCode) {
-            throw new Error(cmdLine + ' exited with code ' + code);
+        if (typeof expectedExitCode === 'undefined') {
+            expectedExitCode = 0;
         }
-        if (!next) process.exit(0);
-        next();
+
+        child.stdout.on('data', function(data) {
+            process.stdout.write(data.toString());
+        });
+        child.stderr.on('data', function(data) {
+            process.stdout.write(data.toString());
+        });
+        child.on('exit', function(code) {
+            if (code !== expectedExitCode) {
+                reject(new Error(cmdLine + ' exited with code ' + code));
+            }
+
+            resolve();
+        });
     });
 }
 
@@ -342,11 +345,12 @@ function isPreInstallMode() {
 // Start
 if (os.platform() !== 'win32') {
     if (isPreInstallMode()) {
-        run('git submodule init');
-        run('git submodule update');
-        run('make libsodium');
+        run('git submodule init')
+            .then(() => run('git submodule update'))
+            .then(() => run('make libsodium'))
+            .then(() => process.exit(0));
     } else {
-        run('make nodesodium');
+        run('make nodesodium').then(() => process.exit(0));
     }
 } else {
     checkMSVSVersion();
