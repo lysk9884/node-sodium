@@ -342,6 +342,8 @@ function isPreInstallMode() {
 // Start
 if (os.platform() !== 'win32') {
     if (isPreInstallMode()) {
+        run('git submodule init');
+        run('git submodule update');
         run('make libsodium');
     } else {
         run('make nodesodium');
