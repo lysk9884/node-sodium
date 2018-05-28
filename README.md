@@ -1,12 +1,11 @@
-[![Build Status](https://secure.travis-ci.org/paixaop/node-sodium.png)](http://travis-ci.org/paixaop/node-sodium)
+[![Build Status](https://secure.travis-ci.org/general-programming/node-sodium.png)](http://travis-ci.org/general-programming/node-sodium)
 
 # node-sodium
 
-Versions 2.0 and above are no longer compatible with Node 0.x. If you're still using an old version of node please use an older version of node-sodium.
+Fork of paxiaop/node-sodium which fixes lingering issues, as upstream has not been maintained for half a year & has a broken 2.0.3 release.
+Currently built against libsodium 1.0.15
 
-Uses Libsodium 1.0.15
-
-Port of the [lib sodium](https://github.com/jedisct1/libsodium) Encryption Library to Node.js.
+Port of the [libsodium](https://github.com/jedisct1/libsodium) Encryption Library to Node.js.
 
 As of libsodium 1.0.11 all functions except memory allocation have been implemented.
 Missing functions are listed in [`docs/not implemented.md`](https://github.com/paixaop/node-sodium/blob/master/docs/not%20implemented.md).
