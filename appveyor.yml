@@ -1,6 +1,6 @@
 # Test against the latest version of this Node.js version
 
-version: 2.0.4-{build}
+version: 2.0.4-b{build}
 
 environment:
   matrix:
