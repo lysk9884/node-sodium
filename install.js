@@ -31,6 +31,7 @@ var includeFiles = [
     "include/sodium/crypto_box.h",
     "include/sodium/crypto_box_curve25519xchacha20poly1305.h",
     "include/sodium/crypto_box_curve25519xsalsa20poly1305.h",
+    "include/sodium/crypto_core_ed25519.h",
     "include/sodium/crypto_core_hchacha20.h",
     "include/sodium/crypto_core_hsalsa20.h",
     "include/sodium/crypto_core_salsa20.h",
@@ -52,6 +53,7 @@ var includeFiles = [
     "include/sodium/crypto_pwhash_scryptsalsa208sha256.h",
     "include/sodium/crypto_scalarmult.h",
     "include/sodium/crypto_scalarmult_curve25519.h",
+    "include/sodium/crypto_scalarmult_ed25519.h",
     "include/sodium/crypto_secretbox.h",
     "include/sodium/crypto_secretbox_xchacha20poly1305.h",
     "include/sodium/crypto_secretbox_xsalsa20poly1305.h",
@@ -73,6 +75,7 @@ var includeFiles = [
     "include/sodium/crypto_verify_64.h",
     "include/sodium/export.h",
     "include/sodium/randombytes.h",
+    "include/sodium/randombytes_nativeclient.h",
     "include/sodium/randombytes_salsa20_random.h",
     "include/sodium/randombytes_sysrandom.h",
     "include/sodium/runtime.h",
@@ -238,7 +241,7 @@ function gypConfigure(next) { // eslint-disable-line no-unused-vars
 }
 
 function doDownloads(next) {
-    var baseURL = "https://raw.githubusercontent.com/paixaop/libsodium-bin/master";
+    var baseURL = "https://raw.githubusercontent.com/general-programming/libsodium-bin/master";
     console.log("Download libsodium.lib");
     var ver = getPlatformToolsVersion();
     console.log("Platform Tool is " + ver);
@@ -347,8 +350,8 @@ function preinstall() {
 }
 
 function handleErr(err) {
-    console.error("!! Error encountered while building:")
-    console.error(err)
+    console.error("!! Error encountered while building:");
+    console.error(err);
     process.exit(1);
 }
 
@@ -357,10 +360,10 @@ if (os.platform() !== "win32") {
     if (isPreInstallMode()) {
         if (exists(".git")) {
             run("command -v git >/dev/null 2>&1 || { echo >&2 \"I require git but it's not installed.  Aborting.\"; exit 1; }")
-            .then(() => run("git submodule init"))
-            .then(() => run("git submodule update"))
-            .then(preinstall)
-            .catch(handleErr);
+                .then(() => run("git submodule init"))
+                .then(() => run("git submodule update"))
+                .then(preinstall)
+                .catch(handleErr);
         } else {
             preinstall().then(() => process.exit(0)).catch(handleErr);
         }
