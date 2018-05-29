@@ -1,4 +1,7 @@
 # Test against the latest version of this Node.js version
+
+version: 2.0.4-{build}
+
 environment:
   matrix:
     # node.js
@@ -10,6 +13,8 @@ environment:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
+  # Set the MSVS correctly
+  - npm config set msvs_version 2015
   # install modules
   - npm install
 
