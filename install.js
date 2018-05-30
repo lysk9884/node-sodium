@@ -81,7 +81,13 @@ var includeFiles = [
     "include/sodium/runtime.h",
     "include/sodium/utils.h",
     "include/sodium/version.h",
-    "include/sodium.h"
+    "include/sodium.h",
+    "include/sodium/private/common.h",
+    "include/sodium/private/ed25519_ref10_fe_25_5.h",
+    "include/sodium/private/ed25519_ref10_fe_51.h",
+    "include/sodium/private/ed25519_ref10.h",
+    "include/sodium/private/implementations.h",
+    "include/sodium/private/sse2_64_32.h",
 ];
 
 function recursePathList(paths) {
@@ -375,6 +381,7 @@ if (os.platform() !== "win32") {
     if (isPreInstallMode()) {
         console.log("Preinstall Mode");
         createFullPath("deps/build/include/sodium");
+        createFullPath("deps/build/include/sodium/private");
         createFullPath("deps/build/lib");
         createFullPath("build/Release");
         doDownloads(function() {
