@@ -5,19 +5,19 @@ var fs = require("fs");
 function run(cmdLine, expectedExitCode) {
     return new Promise(function(resolve, reject) {
         console.log("=>> " + cmdLine);
-        var child = exec(cmdLine);
+        var c = exec(cmdLine);
 
         if (typeof expectedExitCode === "undefined") {
             expectedExitCode = 0;
         }
 
-        child.stdout.on("data", function(data) {
+        c.stdout.on("data", function(data) {
             process.stdout.write(data.toString());
         });
-        child.stderr.on("data", function(data) {
+        c.stderr.on("data", function(data) {
             process.stdout.write(data.toString());
         });
-        child.on("exit", function(code) {
+        c.on("exit", function(code) {
             if (code !== expectedExitCode) {
                 reject(new Error(cmdLine + " exited with code " + code));
             }
@@ -47,12 +47,23 @@ if (os.platform() !== "win32") {
         .then(() => process.exit(0))
         .catch(handleErr);
 } else {
-    console.log("There are no tests defined for Windows. Checking if build is successful...");
+    console.log("Checking if build is successful...");
     console.log("Checking for `build/Release/sodium.node`...");
     if (exists("./build/Release/sodium.node")) {
-        console.log("`build/Release/sodium.node` is found, exiting...");
-        process.exit(0);
+        console.log("`build/Release/sodium.node` is found, checking if mocha is available...");
+
+        if (exists("./node_modules/.bin/mocha.cmd")) {
+            console.log("mocha is available. Test is starting...");
+            run("set NODE_ENV=test&&\"node_modules\\.bin\\mocha.cmd\" --reporter tap --globals setImmediate,clearImmediate")
+                .then(() => process.exit(0))
+                .catch(handleErr);
+        } else {
+            console.log("mocha is not available. Exiting...");
+            process.exit(0);
+        }
+
+    } else {
+        console.error("`build/Release/sodium.node` is NOT found, exiting...");
+        process.exit(1);
     }
-    console.error("`build/Release/sodium.node` is NOT found, exiting...");
-    process.exit(1);
 }
