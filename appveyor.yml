@@ -24,6 +24,7 @@ test_script:
   - node --version
   - npm --version
   # run tests
+  - set NODE_ENV=test
   - npm test
 
 # Don't actually build.
