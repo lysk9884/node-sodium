@@ -1,5 +1,7 @@
 # Test against the latest version of this Node.js version
 
+os: Visual Studio 2013
+
 version: 2.0.4-b{build}
 
 environment:
@@ -14,7 +16,7 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # Set the MSVS correctly
-  - npm config set msvs_version 2015
+  - npm config set msvs_version 2013
   # install modules
   - npm install
 
@@ -25,7 +27,7 @@ test_script:
   - npm --version
   # run tests
   - set NODE_ENV=test
-  - cmd: node_modules\.bin\mocha.cmd --reporter tap --globals setImmediate,clearImmediate
+  - node_modules\.bin\mocha.cmd --reporter tap --globals setImmediate,clearImmediate
 
 # Don't actually build.
 build: off
