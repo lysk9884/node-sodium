@@ -20,7 +20,7 @@ function run(cmdLine, expectedExitCode) {
         c.on("exit", function(code) {
             if (code !== expectedExitCode) {
                 if (code === 3221225477) {
-                    c = exec(cmdLine);
+                    run(cmdLine).then(() => resolve());
                 } else {
                     reject(new Error(cmdLine + " exited with code " + code));
                 }
