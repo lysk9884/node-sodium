@@ -13,9 +13,6 @@ environment:
   APPVEYOR_RDP_PASSWORD:
     secure: HKdH/QeVheqQuka2hDeCJw==
 
-init:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node.js or io.js
@@ -33,6 +30,9 @@ test_script:
   # run tests
   - set NODE_ENV=test
   - node_modules\.bin\mocha.cmd --reporter tap --globals setImmediate,clearImmediate
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # Don't actually build.
 build: off
