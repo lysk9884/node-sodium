@@ -1,6 +1,6 @@
 # Test against the latest version of this Node.js version
 
-os: Visual Studio 2013
+os: Visual Studio 2017
 
 version: 2.0.4-b{build}
 
@@ -16,7 +16,7 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # Set the MSVS correctly
-  - npm config set msvs_version 2013
+  - npm config set msvs_version 2017
   # install modules
   - npm install
 
