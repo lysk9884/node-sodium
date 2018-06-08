@@ -1,6 +1,7 @@
 var exec = require("child_process").exec;
 var os = require("os");
 var fs = require("fs");
+var loopCnt = 0;
 
 function run(cmdLine, expectedExitCode) {
     return new Promise(function(resolve, reject) {
@@ -20,6 +21,8 @@ function run(cmdLine, expectedExitCode) {
         c.on("exit", function(code) {
             if (code !== expectedExitCode) {
                 if (code === 3221225477) {
+                    if (loopCnt === 10) reject(new Error(cmdLine + " exited with code " + code));
+                    loopCnt++;
                     run(cmdLine).then(() => resolve());
                 } else {
                     reject(new Error(cmdLine + " exited with code " + code));
