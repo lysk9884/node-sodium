@@ -1,10 +1,6 @@
 # Test against the latest version of this Node.js version
 
-image: Visual Studio 2013
-
-environment:
-  APPVEYOR_RDP_PASSWORD:
-    secure: HKdH/QeVheqQuka2hDeCJw==
+image: Visual Studio 2015
 
 version: 2.0.4-b{build}
 
@@ -14,6 +10,8 @@ environment:
     - nodejs_version: "6"
     - nodejs_version: "8"
     - nodejs_version: "9"
+  APPVEYOR_RDP_PASSWORD:
+    secure: HKdH/QeVheqQuka2hDeCJw==
 
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
@@ -23,7 +21,7 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # Set the MSVS correctly
-  - npm config set msvs_version 2013
+  - npm config set msvs_version 2015
   # install modules
   - npm install
 
