@@ -58,7 +58,7 @@ if (os.platform() !== "win32") {
 
         if (exists("./node_modules/.bin/mocha.cmd")) {
             console.log("mocha is available. Test is starting...");
-            run("set NODE_ENV=test&&\"node_modules\\.bin\\mocha.cmd\" --slow 10000 --timeout 20000 --globals setImmediate,clearImmediate")
+            run("set NODE_ENV=test&&\"node_modules\\.bin\\mocha.cmd\" --slow 10000 --timeout 20000 --reporter tap --globals setImmediate,clearImmediate")
                 .then(() => process.exit(0))
                 .catch(handleErr);
         } else {
