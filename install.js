@@ -162,7 +162,8 @@ function getPlatformToolsVersion() {
         2010: "v100",
         2012: "v110",
         2013: "v120",
-        2015: "v140"
+        2015: "v140",
+        2017: "v141"
     };
 
     checkMSVSVersion();
@@ -335,7 +336,7 @@ function checkMSVSVersion() {
         errorSetMSVSVersion();
     }
     console.log("MS Version: " + process.env.npm_config_msvs_version);
-    if (process.env.npm_config_msvs_version.search(/^2010|2012|2013|2015$/)) {
+    if (process.env.npm_config_msvs_version.search(/^2010|2012|2013|2015|2017$/)) {
         errorInvalidMSVSVersion();
     }
 }
