@@ -27,7 +27,7 @@ test_script:
   - npm --version
   # run tests
   - set NODE_ENV=test
-  - node_modules\.bin\mocha.cmd --slow 10000 --timeout 20000 --trace
+  - node_modules\.bin\mocha.cmd --slow 10000 --timeout 20000
 
 # Don't actually build.
 build: off
