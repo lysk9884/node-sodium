@@ -21,8 +21,9 @@ function run(cmdLine, expectedExitCode) {
             if (code !== expectedExitCode) {
                 if (code === 3221225477) {
                     c = exec(cmdLine);
+                } else {
+                    reject(new Error(cmdLine + " exited with code " + code));
                 }
-                reject(new Error(cmdLine + " exited with code " + code));
             }
 
             resolve();
