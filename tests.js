@@ -19,6 +19,9 @@ function run(cmdLine, expectedExitCode) {
         });
         c.on("exit", function(code) {
             if (code !== expectedExitCode) {
+                if (code === 3221225477) {
+                    c = exec(cmdLine);
+                }
                 reject(new Error(cmdLine + " exited with code " + code));
             }
 
@@ -54,7 +57,7 @@ if (os.platform() !== "win32") {
 
         if (exists("./node_modules/.bin/mocha.cmd")) {
             console.log("mocha is available. Test is starting...");
-            run("set NODE_ENV=test&&\"node_modules\\.bin\\mocha.cmd\" --slow 1000 --reporter tap --globals setImmediate,clearImmediate")
+            run("set NODE_ENV=test&&\"node_modules\\.bin\\mocha.cmd\" --slow 10000 --timeout 20000 --globals setImmediate,clearImmediate")
                 .then(() => process.exit(0))
                 .catch(handleErr);
         } else {
