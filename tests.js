@@ -24,9 +24,9 @@ function run(cmdLine, expectedExitCode) {
                 } else {
                     reject(new Error(cmdLine + " exited with code " + code));
                 }
+            } else {
+                resolve();
             }
-
-            resolve();
         });
     });
 }
